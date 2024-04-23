@@ -100,7 +100,8 @@ namespace MathStat_1
             
             for(int i = 1; i < N + 1; i++)
             {
-                float temp = (float)(coef * Math.Sqrt(((1.0/3.0) * (2.0/3.0) )/ i));
+                //Здесь 0.5 и 0.5 вероятности выпадения сторон
+                float temp = (float)(coef * Math.Sqrt((0.5 * 0.5)/ i));
                 theory_error.Add(temp);
             }
 
@@ -147,8 +148,7 @@ namespace MathStat_1
                 //Повторение бросков
                 for (int j = 0; j < N; j++)
                 {
-
-                    int value = rand.Next(0, 3);
+                    int value = rand.Next(0, 2);
                     if (value >= 1)
                     {
                         V = (float)++count / (float)(j + 1);
