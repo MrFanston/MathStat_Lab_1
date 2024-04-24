@@ -1,0 +1,122 @@
+\doxysection{Класс Math\+Stat\+\_\+1.\+Function}
+\hypertarget{class_math_stat__1_1_1_function}{}\label{class_math_stat__1_1_1_function}\index{MathStat\_1.Function@{MathStat\_1.Function}}
+
+
+Класс с методами расчета  
+
+
+\doxysubsubsection*{Открытые члены}
+\begin{DoxyCompactItemize}
+\item 
+List$<$ List$<$ float $>$ $>$ \mbox{\hyperlink{class_math_stat__1_1_1_function_a2ecf1131ffe298fe9ab0433981c0ad84}{experiment}} (int N, int K, List$<$ List$<$ float $>$ $>$ Vo\+\_\+sum)
+\begin{DoxyCompactList}\small\item\em Метод проведения эксперемента подкидывания монетки \end{DoxyCompactList}\item 
+List$<$ float $>$ \mbox{\hyperlink{class_math_stat__1_1_1_function_a843204fa839f61b0737246247bb35fd9}{mean}} (List$<$ List$<$ float $>$ $>$ Vo\+\_\+sum)
+\begin{DoxyCompactList}\small\item\em Метод вычисления средней частоты по столбцам \end{DoxyCompactList}\item 
+List$<$ List$<$ float $>$ $>$ \mbox{\hyperlink{class_math_stat__1_1_1_function_a92fe9e07c8de0dfce9eb77c1a4bc710f}{conf\+\_\+\+Interval}} (float a, List$<$ List$<$ float $>$ $>$ Vo\+\_\+sum)
+\begin{DoxyCompactList}\small\item\em Метод вычисления доверительного интервала \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{class_math_stat__1_1_1_function_aff35538499c3b1c96d11e05b71964d67}{approximate\+\_\+\+Value}} (float a, List$<$ List$<$ float $>$ $>$ Vo\+\_\+sum)
+\begin{DoxyCompactList}\small\item\em Метод вычисления приближенного значения вероятности \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{class_math_stat__1_1_1_function_aa09a57f2e0ba568cc0a4ae9161a2f6d2}{normal\+\_\+\+Quantile}} (float p)
+\begin{DoxyCompactList}\small\item\em Метод вычисления квантиля стандартного нормального распределения \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Подробное описание}
+Класс с методами расчета 
+
+\doxysubsection{Методы}
+\Hypertarget{class_math_stat__1_1_1_function_aff35538499c3b1c96d11e05b71964d67}\label{class_math_stat__1_1_1_function_aff35538499c3b1c96d11e05b71964d67} 
+\index{MathStat\_1.Function@{MathStat\_1.Function}!approximate\_Value@{approximate\_Value}}
+\index{approximate\_Value@{approximate\_Value}!MathStat\_1.Function@{MathStat\_1.Function}}
+\doxysubsubsection{\texorpdfstring{approximate\_Value()}{approximate\_Value()}}
+{\footnotesize\ttfamily float Math\+Stat\+\_\+1.\+Function.\+approximate\+\_\+\+Value (\begin{DoxyParamCaption}\item[{float}]{a,  }\item[{List$<$ List$<$ float $>$ $>$}]{Vo\+\_\+sum }\end{DoxyParamCaption})}
+
+
+
+Метод вычисления приближенного значения вероятности 
+
+
+\begin{DoxyParams}[1]{Аргументы}
+\mbox{\texttt{ in}}  & {\em a} & Уровень доверия \\
+\hline
+\mbox{\texttt{ in}}  & {\em Vo\+\_\+sum} & Двумерный лист с эксперементами и частотами выпадения орла в каждом из них \\
+\hline
+\mbox{\texttt{ out}}  & {\em sum} & Приближенное значение вероятности\\
+\hline
+\end{DoxyParams}
+Выводит среднее значение вероятностей среди последних вероятностей эксперементов \Hypertarget{class_math_stat__1_1_1_function_a92fe9e07c8de0dfce9eb77c1a4bc710f}\label{class_math_stat__1_1_1_function_a92fe9e07c8de0dfce9eb77c1a4bc710f} 
+\index{MathStat\_1.Function@{MathStat\_1.Function}!conf\_Interval@{conf\_Interval}}
+\index{conf\_Interval@{conf\_Interval}!MathStat\_1.Function@{MathStat\_1.Function}}
+\doxysubsubsection{\texorpdfstring{conf\_Interval()}{conf\_Interval()}}
+{\footnotesize\ttfamily List$<$ List$<$ float $>$ $>$ Math\+Stat\+\_\+1.\+Function.\+conf\+\_\+\+Interval (\begin{DoxyParamCaption}\item[{float}]{a,  }\item[{List$<$ List$<$ float $>$ $>$}]{Vo\+\_\+sum }\end{DoxyParamCaption})}
+
+
+
+Метод вычисления доверительного интервала 
+
+
+\begin{DoxyParams}[1]{Аргументы}
+\mbox{\texttt{ in}}  & {\em a} & Уровень доверия \\
+\hline
+\mbox{\texttt{ in}}  & {\em Vo\+\_\+sum} & Двумерный лист с эксперементами и частотами выпадения орла в каждом из них \\
+\hline
+\mbox{\texttt{ out}}  & {\em Vo\+\_\+interval} & Двумерный лист с верхними и нижними границами частот доверительного интервала\\
+\hline
+\end{DoxyParams}
+Сортирует исходный лист с частотами и записывает границы с откинутыми значениями сверху и снизу \Hypertarget{class_math_stat__1_1_1_function_a2ecf1131ffe298fe9ab0433981c0ad84}\label{class_math_stat__1_1_1_function_a2ecf1131ffe298fe9ab0433981c0ad84} 
+\index{MathStat\_1.Function@{MathStat\_1.Function}!experiment@{experiment}}
+\index{experiment@{experiment}!MathStat\_1.Function@{MathStat\_1.Function}}
+\doxysubsubsection{\texorpdfstring{experiment()}{experiment()}}
+{\footnotesize\ttfamily List$<$ List$<$ float $>$ $>$ Math\+Stat\+\_\+1.\+Function.\+experiment (\begin{DoxyParamCaption}\item[{int}]{N,  }\item[{int}]{K,  }\item[{List$<$ List$<$ float $>$ $>$}]{Vo\+\_\+sum }\end{DoxyParamCaption})}
+
+
+
+Метод проведения эксперемента подкидывания монетки 
+
+
+\begin{DoxyParams}[1]{Аргументы}
+\mbox{\texttt{ in}}  & {\em N} & Количество подбрасываний монеты \\
+\hline
+\mbox{\texttt{ in}}  & {\em K} & Количество проводимых эксперементов \\
+\hline
+\mbox{\texttt{ out}}  & {\em Vo\+\_\+sum} & Двумерный лист с эксперементами и частотами выпадения орла в каждом из них\\
+\hline
+\end{DoxyParams}
+Проводит серию эксперементов, в каждом из которых проводит серию бросков монеты, записывая каждый раз относительные частоты выпадения орла \Hypertarget{class_math_stat__1_1_1_function_a843204fa839f61b0737246247bb35fd9}\label{class_math_stat__1_1_1_function_a843204fa839f61b0737246247bb35fd9} 
+\index{MathStat\_1.Function@{MathStat\_1.Function}!mean@{mean}}
+\index{mean@{mean}!MathStat\_1.Function@{MathStat\_1.Function}}
+\doxysubsubsection{\texorpdfstring{mean()}{mean()}}
+{\footnotesize\ttfamily List$<$ float $>$ Math\+Stat\+\_\+1.\+Function.\+mean (\begin{DoxyParamCaption}\item[{List$<$ List$<$ float $>$ $>$}]{Vo\+\_\+sum }\end{DoxyParamCaption})}
+
+
+
+Метод вычисления средней частоты по столбцам 
+
+
+\begin{DoxyParams}[1]{Аргументы}
+\mbox{\texttt{ in}}  & {\em Vo\+\_\+sum} & Двумерный лист с эксперементами и частотами выпадения орла в каждом из них \\
+\hline
+\mbox{\texttt{ out}}  & {\em Vo\+\_\+mean} & Лист со средними частотами каждого эксперемента \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_math_stat__1_1_1_function_aa09a57f2e0ba568cc0a4ae9161a2f6d2}\label{class_math_stat__1_1_1_function_aa09a57f2e0ba568cc0a4ae9161a2f6d2} 
+\index{MathStat\_1.Function@{MathStat\_1.Function}!normal\_Quantile@{normal\_Quantile}}
+\index{normal\_Quantile@{normal\_Quantile}!MathStat\_1.Function@{MathStat\_1.Function}}
+\doxysubsubsection{\texorpdfstring{normal\_Quantile()}{normal\_Quantile()}}
+{\footnotesize\ttfamily float Math\+Stat\+\_\+1.\+Function.\+normal\+\_\+\+Quantile (\begin{DoxyParamCaption}\item[{float}]{p }\end{DoxyParamCaption})}
+
+
+
+Метод вычисления квантиля стандартного нормального распределения 
+
+
+\begin{DoxyParams}[1]{Аргументы}
+\mbox{\texttt{ in}}  & {\em p} & ((1 + ALPHA) / 2) \\
+\hline
+\mbox{\texttt{ out}}  & {\em value} & Значение квантиля распределения \\
+\hline
+\end{DoxyParams}
+
+
+Объявления и описания членов класса находятся в файле\+:\begin{DoxyCompactItemize}
+\item 
+Form1.\+cs\end{DoxyCompactItemize}
