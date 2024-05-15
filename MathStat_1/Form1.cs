@@ -22,9 +22,9 @@ namespace MathStat_1
     /*!
 	    \brief Родительский класс, форма приложения
 
-	    Данный класс имеет содержит все событийные и обрабатывающие классы
+	    Данный класс содержит все событийные и обрабатывающие классы
     */
-public partial class Form1 : Form
+    public partial class Form1 : Form
     {
         public Form1()
         {
@@ -32,7 +32,7 @@ public partial class Form1 : Form
         }
 
         /*!
-	        \brief Класс события нажатия на кнопку расчета
+	        \brief Событие нажатия на кнопку расчета
 
 	        Производит эксперементальные расчеты подбрасывания монетки:
             1) Проведение эксперемента;
@@ -43,264 +43,329 @@ public partial class Form1 : Form
             6) Построение всех графиков и их вывод.
             
         */
-        public void button1_Click(object sender, EventArgs e)
+        public void button_calculation_Click(object sender, EventArgs e)
         {
             // Очистка графика
-            chart1.Series.Clear();
-            chart2.Series.Clear();
+            chart_depending_frequencies.Series.Clear();
+            chart_error.Series.Clear();
 
-            Function function = new Function();
+            // Параметры для расчета
+            int numThrows = ((int)numericUpDown_num_throws.Value);
+            int numExperiments = ((int)numericUpDown_num_experiments.Value);
+            float confidenceLevel = ((int)numericUpDown_confidence_level.Value) / 100.0f;
 
-            //  Параметры для расчета
-            int N = ((int)numericUpDown1.Value); 
-            int K = ((int)numericUpDown2.Value);
-            float a = ((int)numericUpDown3.Value);
-            a = a / (float)100;
-            
             // Матрица с частотами
-            List<List<float>> Vo_sum = new List<List<float>>();
+            List<List<float>> frequencyMatrix = PerformExperiments(numThrows, numExperiments, chart_depending_frequencies);
 
-            // Проводим серию эксперементов
-            Vo_sum = function.experiment(N, K, Vo_sum);
+            // Матрица с средними значениями
+            List<float> averageFrequencies = CalculateMeanFrequencies(numThrows, numExperiments, frequencyMatrix, chart_depending_frequencies);
+
+            // Строим график доверительного интервала
+            List<List<float>> confidenceIntervals = CalculateConfidenceIntervals(numThrows, confidenceLevel, frequencyMatrix, chart_depending_frequencies);
+
+            // Приближенное значение вероятности
+            float approximatedProbability = CalculateApproximatedProbability(numThrows, frequencyMatrix, confidenceIntervals, label5);
+
+            // Вычисляем теоретическую ошибку частоты от количества подбрасывания монеты
+            List<float> theoreticalError = CalculateTheoreticalError(numThrows, confidenceLevel, chart_error);
+
+            // Вычисляем эксперементальную ошибку частоты от количества подбрасывания монеты
+            List<float> experimentalError = CalculateExperimentalError(numThrows, confidenceIntervals, chart_error);
+
+            // Настройка графика
+            chart_depending_frequencies.ChartAreas[0].AxisX.Maximum = numThrows;
+            chart_depending_frequencies.ChartAreas[0].AxisX.Minimum = 1;
+            chart_depending_frequencies.ChartAreas[0].AxisY.Maximum = 1;
+            chart_depending_frequencies.ChartAreas[0].AxisY.Minimum = 0;
+
+            // Установка логарифмической шкалы на оси X
+            chart_depending_frequencies.ChartAreas[0].AxisX.IsLogarithmic = true;
+            chart_error.ChartAreas[0].AxisX.IsLogarithmic = true;
+
+            // Установка базы логарифма
+            chart_depending_frequencies.ChartAreas[0].AxisX.LogarithmBase = 10;
+            chart_error.ChartAreas[0].AxisX.LogarithmBase = 10;
+
+        }
+
+        public List<List<float>> PerformExperiments(int numThrows, int numExperiments, Chart chart)
+        {
+            Function function = new Function();
+            List<List<float>> frequencyMatrix = new List<List<float>>();
+
+            // Проводим серию экспериментов
+            frequencyMatrix = function.PerformExperiments(numThrows, numExperiments, frequencyMatrix);
 
             // Вывод графика частот
-            for (int i = 0; i < K; i++)
+            for (int i = 0; i < numExperiments; i++)
             {
-                chart1.Series.Add(Name + i);
-                chart1.Series[i].ChartType = SeriesChartType.Line;
-                chart1.Series[i].Color = Color.Black;
-                for (int j = 1; j <= N; j++)
+                chart.Series.Add(Name + i);
+                chart.Series[i].ChartType = SeriesChartType.Line;
+                chart.Series[i].Color = Color.Black;
+                for (int j = 1; j <= numThrows; j++)
                 {
-                    chart1.Series[i].Points.AddXY(j, Vo_sum[i][j-1]);
+                    chart.Series[i].Points.AddXY(j, frequencyMatrix[i][j - 1]);
                 }
             }
 
-            // Матрица с средними значениями
-            List<float> Vo_mean;
+            return frequencyMatrix;
+        }
+
+        public List<float> CalculateMeanFrequencies(int numThrows, int numExperiments, List<List<float>> frequencyMatrix, Chart chart)
+        {
+            Function function = new Function();
 
             // Рассчитываем значения средней относительной частоты
-            Vo_mean = function.mean(Vo_sum);
+            List<float> averageFrequencies = function.CalculateMeanFrequencies(frequencyMatrix);
 
             // Строим график средней относительной частоты
-            chart1.Series.Add("average_frequency");
-            chart1.Series["average_frequency"].ChartType = SeriesChartType.Line;
-            chart1.Series["average_frequency"].Color = Color.Red;
-            for (int i = 0; i < N; i++)
+            chart.Series.Add("average_frequency");
+            chart.Series["average_frequency"].ChartType = SeriesChartType.Line;
+            chart.Series["average_frequency"].Color = Color.Red;
+
+            for (int i = 0; i < numThrows; i++)
             {
-                chart1.Series["average_frequency"].Points.AddXY(i, Vo_mean[i] / (float)K);
+                chart.Series["average_frequency"].Points.AddXY(i, averageFrequencies[i] / (float)numExperiments);
             }
+
+            return averageFrequencies;
+        }
+
+        public List<List<float>> CalculateConfidenceIntervals(int numThrows, float confidenceLevel, List<List<float>> frequencyMatrix, Chart chart)
+        {
+            Function function = new Function();
 
             // Строим график доверительного интервала
-            List < List<float> > Vo_interval;
-            Vo_interval = function.conf_Interval(a, Vo_sum);
-            float down = (1 - a) / 2 * K;
-            float up = K - down - 1;
-            chart1.Series.Add("up");
-            chart1.Series["up"].ChartType = SeriesChartType.Line;
-            chart1.Series["up"].Color = Color.Blue;
-            chart1.Series.Add("down");
-            chart1.Series["down"].ChartType = SeriesChartType.Line;
-            chart1.Series["down"].Color = Color.Blue;
-            for (int i = 0; i < N; i++)
-            {
-                chart1.Series["up"].Points.AddXY(i, Vo_interval[1][i]);
-                chart1.Series["down"].Points.AddXY(i, Vo_interval[0][i]);
-            } 
+            List<List<float>> confidenceIntervals = function.CalculateConfidenceIntervals(confidenceLevel, frequencyMatrix);
 
-            // Приближенное значение вероятности
-            float sum = function.approximate_Value(a, Vo_sum);
-            label5.Text = sum.ToString() + " +- " + ((Vo_interval[0][N-1] - Vo_interval[1][N-1]) / 2).ToString();
+            chart.Series.Add("upper_bound");
+            chart.Series["upper_bound"].ChartType = SeriesChartType.Line;
+            chart.Series["upper_bound"].Color = Color.Blue;
 
-            // Вычисляем теоретическую ошибку частоты от количества подбрасывания монеты
-            List<float> exp_error = new List<float>();
-            for (int i = 1; i < N + 1; i++)
+            chart.Series.Add("lower_bound");
+            chart.Series["lower_bound"].ChartType = SeriesChartType.Line;
+            chart.Series["lower_bound"].Color = Color.Blue;
+
+            for (int i = 0; i < numThrows; i++)
             {
-                exp_error.Add((Vo_interval[0][i-1] - Vo_interval[1][i-1]) / 2);
+                chart.Series["upper_bound"].Points.AddXY(i, confidenceIntervals[1][i]);
+                chart.Series["lower_bound"].Points.AddXY(i, confidenceIntervals[0][i]);
             }
-           
 
-            float coef = function.normal_Quantile((1 + a) / 2);
-            List<float> theory_error = new List<float>();
-            
-            for(int i = 1; i < N + 1; i++)
+            return confidenceIntervals;
+        }
+
+        public float CalculateApproximatedProbability(int numThrows, List<List<float>> frequencyMatrix, List<List<float>> confidenceIntervals, System.Windows.Forms.Label label)
+        {
+            Function function = new Function();
+            float approximatedProbability = function.CalculateApproximatedProbability(frequencyMatrix);
+
+            float lowerBound = confidenceIntervals[0][numThrows - 1];
+            float upperBound = confidenceIntervals[1][numThrows - 1];
+
+            label.Text = approximatedProbability.ToString() + " +- " + ((upperBound - lowerBound) / 2).ToString();
+
+            return approximatedProbability;
+        }
+
+        public List<float> CalculateTheoreticalError(int numThrows, float confidenceLevel, Chart chart)
+        {
+            Function function = new Function();
+            float quantile = function.GetNormalQuantile((1 + confidenceLevel) / 2);
+
+            List<float> theoreticalError = new List<float>();
+
+            for (int i = 1; i < numThrows + 1; i++)
             {
                 // Здесь 0.5 и 0.5 вероятности выпадения сторон
-                float temp = (float)(coef * Math.Sqrt((0.5 * 0.5)/ i));
-                theory_error.Add(temp);
+                float temp = (float)(quantile * Math.Sqrt((0.5 * 0.5) / i));
+                theoreticalError.Add(temp);
             }
 
             // Рисуем графики ошибки
-            chart2.Series.Add("theory");
-            chart2.Series["theory"].ChartType = SeriesChartType.Line;
-            chart2.Series["theory"].Color = Color.Blue;
-            chart2.Series.Add("exp");
-            chart2.Series["exp"].ChartType = SeriesChartType.Line;
-            chart2.Series["exp"].Color = Color.Red;
+            chart.Series.Add("theoretical_error");
+            chart.Series["theoretical_error"].ChartType = SeriesChartType.Line;
+            chart.Series["theoretical_error"].Color = Color.Blue;
 
-            for (int i = 1; i < N; i++)
+            for (int i = 1; i < numThrows; i++)
             {
-                chart2.Series["theory"].Points.AddXY(i, theory_error[i]);
-                chart2.Series["exp"].Points.AddXY(i, exp_error[i]);
+                chart.Series["theoretical_error"].Points.AddXY(i, theoreticalError[i]);
             }
 
-            // Настройка графика
-            chart1.ChartAreas[0].AxisX.Maximum = N;
-            chart1.ChartAreas[0].AxisX.Minimum = 1;
-            chart1.ChartAreas[0].AxisY.Maximum = 1;
-            chart1.ChartAreas[0].AxisY.Minimum = 0;
+            return theoreticalError;
+        }
 
-            // Установка логарифмической шкалы на оси X
-            chart1.ChartAreas[0].AxisX.IsLogarithmic = true;
-            chart2.ChartAreas[0].AxisX.IsLogarithmic = true;
-            // Установка базы логарифма
-            chart1.ChartAreas[0].AxisX.LogarithmBase = 10;
-            chart2.ChartAreas[0].AxisX.LogarithmBase = 10;
+        public List<float> CalculateExperimentalError(int numThrows, List<List<float>> confidenceIntervals, Chart chart)
+        {
+            List<float> experimentalError = new List<float>();
+            for (int i = 1; i < numThrows + 1; i++)
+            {
+                experimentalError.Add((confidenceIntervals[0][i - 1] - confidenceIntervals[1][i - 1]) / 2);
+            }
 
+            chart.Series.Add("experimental_error");
+            chart.Series["experimental_error"].ChartType = SeriesChartType.Line;
+            chart.Series["experimental_error"].Color = Color.Red;
+
+            for (int i = 1; i < numThrows; i++)
+            {
+                chart.Series["experimental_error"].Points.AddXY(i, experimentalError[i]);
+            }
+
+            return experimentalError;
         }
     }
-	//! Класс с методами расчета
+
+    //! Класс с методами расчета
     public class Function
     {
         /*!
             \brief Метод проведения эксперемента подкидывания монетки
         
-            \param[in] N Количество подбрасываний монеты
-            \param[in] K Количество проводимых эксперементов
-            \param[out] Vo_sum Двумерный лист с эксперементами и частотами выпадения орла в каждом из них
+            \param[in] numThrows Количество подбрасываний монеты
+            \param[in] numExperiments Количество проводимых экспериментов
+            \param[out] frequencyMatrix Двумерный лист с экспериментами и частотами выпадения орла в каждом из них
         
-            Проводит серию эксперементов, в каждом из которых проводит серию бросков монеты, 
+            Проводит серию экспериментов, в каждом из которых проводит серию бросков монеты, 
             записывая каждый раз относительные частоты выпадения орла
         */
-        public List<List<float>> experiment(int N, int K, List<List<float>> Vo_sum)
+        public List<List<float>> PerformExperiments(int numThrows, int numExperiments, List<List<float>> frequencyMatrix)
         {
             var rand = new Random();
-            // Повторение эксперементов
-            for (int i = 0; i < K; i++)
+
+            // Повторение экспериментов
+            for (int i = 0; i < numExperiments; i++)
             {
-                float V = 0;
-                int count = 0;
-                List<float> Vo = new List<float>();
+                float relativeFrequency;
+                int headsCount = 0;
+                List<float> experimentResults = new List<float>();
+
                 // Повторение бросков
-                for (int j = 0; j < N; j++)
+                for (int j = 0; j < numThrows; j++)
                 {
-                    int value = rand.Next(0, 2);
-                    if (value >= 1)
-                    {
-                        V = (float)++count / (float)(j + 1);
-                    }
-                    else
-                    {
-                        V = (float)count / (float)(j + 1);
-                    }
-                    Vo.Add(V);
+                    int coinFlip = rand.Next(0, 2);
+
+                    if (coinFlip >= 1) ++headsCount;
+
+                    relativeFrequency = (float)headsCount / (float)(j + 1);
+
+                    experimentResults.Add(relativeFrequency);
                 }
-                Vo_sum.Add(Vo);
+
+                frequencyMatrix.Add(experimentResults);
             }
-            return Vo_sum;
+
+            return frequencyMatrix;
         }
 
         /*!
             \brief Метод вычисления средней частоты по столбцам
         
-            \param[in] Vo_sum Двумерный лист с эксперементами и частотами выпадения орла в каждом из них
-            \param[out] Vo_mean Лист со средними частотами каждого эксперемента
+            \param[in] frequencyMatrix Двумерный лист с экспериментами и частотами выпадения орла в каждом из них
+            \param[out] averageFrequencies Лист со средними частотами каждого эксперимента
         */
-        public List<float> mean(List<List<float>> Vo_sum)
+        public List<float> CalculateMeanFrequencies(List<List<float>> frequencyMatrix)
         {
-            List<float> Vo_mean = new List<float>();
-            int N = Vo_sum[0].Count;
-            int K = Vo_sum.Count;
+            List<float> averageFrequencies = new List<float>();
+            int numThrows = frequencyMatrix[0].Count;
+            int numExperiments = frequencyMatrix.Count;
             float sum = 0;
-            for (int i = 0; i < N; i++)
+
+            for (int i = 0; i < numThrows; i++)
             {
-                for (int j = 0; j < K; j++)
+                for (int j = 0; j < numExperiments; j++)
                 {
-                    sum += Vo_sum[j][i];
+                    sum += frequencyMatrix[j][i];
                 }
-                Vo_mean.Add(sum);
+
+                averageFrequencies.Add(sum);
                 sum = 0;
             }
-            return Vo_mean;
+
+            return averageFrequencies;
         }
 
         /*!
             \brief Метод вычисления доверительного интервала
         
-            \param[in] a Уровень доверия
-            \param[in] Vo_sum Двумерный лист с эксперементами и частотами выпадения орла в каждом из них
-            \param[out] Vo_interval Двумерный лист с верхними и нижними границами частот доверительного интервала
+            \param[in] confidenceLevel Уровень доверия
+            \param[in] frequencyMatrix Двумерный лист с экспериментами и частотами выпадения орла в каждом из них
+            \param[out] confidenceIntervals Двумерный лист с верхними и нижними границами частот доверительного интервала
 
             Сортирует исходный лист с частотами и записывает границы с откинутыми значениями
             сверху и снизу
         */
-        public List<List<float>> conf_Interval(float a, List<List<float>> Vo_sum)
+        public List<List<float>> CalculateConfidenceIntervals(float confidenceLevel, List<List<float>> frequencyMatrix)
         {
-            int N = Vo_sum[0].Count;
-            int K = Vo_sum.Count;
-            float down = (1 - a) / 2 * K;
-            float up = K - down - 1;
-            List<List<float>> Vo_interval = new List<List<float>>();
-            List<float> Vo_up = new List<float>();
-            List<float> Vo_down = new List<float>();
-            Vo_interval.Add(Vo_up);
-            Vo_interval.Add(Vo_down);
+            int numThrows = frequencyMatrix[0].Count;
+            int numExperiments = frequencyMatrix.Count;
 
-            for (int i = 0; i < N; i++)
+            float lowerBoundIndex = (1 - confidenceLevel) / 2 * numExperiments;
+            float upperBoundIndex = numExperiments - lowerBoundIndex - 1;
+
+            List<List<float>> confidenceIntervals = new List<List<float>>();
+            List<float> lowerBounds = new List<float>();
+            List<float> upperBounds = new List<float>();
+
+            confidenceIntervals.Add(lowerBounds);
+            confidenceIntervals.Add(upperBounds);
+
+            // Сортируем вероятности в каждом эксперименте при определенном броске
+            for (int i = 0; i < numThrows; i++)
             {
-                for (int j = 0; j < K - 1; j++)
+                for (int j = 0; j < numExperiments - 1; j++)
                 {
-                    for (int c = j + 1; c < K; c++)
+                    for (int c = j + 1; c < numExperiments; c++)
                     {
-                        if (Vo_sum[c][i] > Vo_sum[j][i])
+                        if (frequencyMatrix[c][i] > frequencyMatrix[j][i])
                         {
-                            var temp = Vo_sum[j][i];
-                            Vo_sum[j][i] = Vo_sum[c][i];
-                            Vo_sum[c][i] = temp;
+                            var temp = frequencyMatrix[j][i];
+                            frequencyMatrix[j][i] = frequencyMatrix[c][i];
+                            frequencyMatrix[c][i] = temp;
                         }
                     }
                 }
-                Vo_interval[0].Add(Vo_sum[(int)down][i]);
-                Vo_interval[1].Add(Vo_sum[(int)up][i]);
+
+                confidenceIntervals[0].Add(frequencyMatrix[(int)lowerBoundIndex][i]);
+                confidenceIntervals[1].Add(frequencyMatrix[(int)upperBoundIndex][i]);
             }
-            return Vo_interval;
+            return confidenceIntervals;
         }
 
         /*!
             \brief Метод вычисления приближенного значения вероятности
         
-            \param[in] a Уровень доверия
-            \param[in] Vo_sum Двумерный лист с эксперементами и частотами выпадения орла в каждом из них
-            \param[out] sum Приближенное значение вероятности
+            \param[in] frequencyMatrix Двумерный лист с экспериментами и частотами выпадения орла в каждом из них
+            \param[out] approximatedProbability Приближенное значение вероятности
 
-            Выводит среднее значение вероятностей среди последних вероятностей эксперементов
+            Выводит среднее значение вероятностей среди последних вероятностей экспериментов
         */
-        public float approximate_Value(float a, List<List<float>> Vo_sum)
+        public float CalculateApproximatedProbability(List<List<float>> frequencyMatrix)
         {
             float sum = 0;
-            int N = Vo_sum[0].Count;
-            int K = Vo_sum.Count;
-            float down = (1 - a) / 2 * K;
-            float up = K - down - 1;
-            up = Vo_sum[(int)(up)][N - 1];
-            down = Vo_sum[(int)(down)][N - 1];
-            for (int i = 0; i < K; i++)
+            int numThrows = frequencyMatrix[0].Count;
+            int numExperiments = frequencyMatrix.Count;
+
+            for (int i = 0; i < numExperiments; i++)
             {
-                sum += Vo_sum[i][N - 1];
+                sum += frequencyMatrix[i][numThrows - 1];
             }
-            sum = sum / (float)K;
-            return sum;
+
+            return sum / (float)numExperiments;
         }
 
         /*!
             \brief Метод вычисления квантиля стандартного нормального распределения
 
             \param[in] p ((1 + ALPHA) / 2)
-            \param[out] value Значение квантиля распределения
+            \param[out] quantile Значение квантиля распределения
         */
-        public float normal_Quantile(float p)
+        public float GetNormalQuantile(float p)
         {
-            float value = (float)(4.91 * (Math.Pow(p, 0.14) - Math.Pow((1 - p), 0.14)));
-            return value;
+            double probability = Math.Pow(p, 0.14);
+            double oneMinusProbability = Math.Pow((1 - p), 0.14);
+
+            return (float)(4.91 * (probability - oneMinusProbability));
         }
     }
 }

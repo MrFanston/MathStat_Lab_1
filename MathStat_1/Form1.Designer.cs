@@ -31,73 +31,73 @@
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Title title2 = new System.Windows.Forms.DataVisualization.Charting.Title();
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown3 = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDown_num_throws = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDown_num_experiments = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDown_confidence_level = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.button_Calculation = new System.Windows.Forms.Button();
+            this.chart_depending_frequencies = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.button_calculation = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.chart2 = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chart2)).BeginInit();
+            this.chart_error = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_num_throws)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_num_experiments)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_confidence_level)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chart_depending_frequencies)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chart_error)).BeginInit();
             this.SuspendLayout();
             // 
-            // numericUpDown1
+            // numericUpDown_num_throws
             // 
-            this.numericUpDown1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.numericUpDown1.Location = new System.Drawing.Point(24, 52);
-            this.numericUpDown1.Maximum = new decimal(new int[] {
+            this.numericUpDown_num_throws.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.numericUpDown_num_throws.Location = new System.Drawing.Point(24, 52);
+            this.numericUpDown_num_throws.Maximum = new decimal(new int[] {
             10000,
             0,
             0,
             0});
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(85, 23);
-            this.numericUpDown1.TabIndex = 0;
-            this.numericUpDown1.Value = new decimal(new int[] {
+            this.numericUpDown_num_throws.Name = "numericUpDown_num_throws";
+            this.numericUpDown_num_throws.Size = new System.Drawing.Size(85, 23);
+            this.numericUpDown_num_throws.TabIndex = 0;
+            this.numericUpDown_num_throws.Value = new decimal(new int[] {
             1000,
             0,
             0,
             0});
             // 
-            // numericUpDown2
+            // numericUpDown_num_experiments
             // 
-            this.numericUpDown2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.numericUpDown2.Location = new System.Drawing.Point(24, 110);
-            this.numericUpDown2.Maximum = new decimal(new int[] {
+            this.numericUpDown_num_experiments.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.numericUpDown_num_experiments.Location = new System.Drawing.Point(24, 110);
+            this.numericUpDown_num_experiments.Maximum = new decimal(new int[] {
             1000,
             0,
             0,
             0});
-            this.numericUpDown2.Name = "numericUpDown2";
-            this.numericUpDown2.Size = new System.Drawing.Size(84, 23);
-            this.numericUpDown2.TabIndex = 1;
-            this.numericUpDown2.Value = new decimal(new int[] {
+            this.numericUpDown_num_experiments.Name = "numericUpDown_num_experiments";
+            this.numericUpDown_num_experiments.Size = new System.Drawing.Size(84, 23);
+            this.numericUpDown_num_experiments.TabIndex = 1;
+            this.numericUpDown_num_experiments.Value = new decimal(new int[] {
             100,
             0,
             0,
             0});
             // 
-            // numericUpDown3
+            // numericUpDown_confidence_level
             // 
-            this.numericUpDown3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.numericUpDown3.Location = new System.Drawing.Point(24, 167);
-            this.numericUpDown3.Minimum = new decimal(new int[] {
+            this.numericUpDown_confidence_level.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.numericUpDown_confidence_level.Location = new System.Drawing.Point(24, 167);
+            this.numericUpDown_confidence_level.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             0});
-            this.numericUpDown3.Name = "numericUpDown3";
-            this.numericUpDown3.Size = new System.Drawing.Size(83, 23);
-            this.numericUpDown3.TabIndex = 2;
-            this.numericUpDown3.Value = new decimal(new int[] {
+            this.numericUpDown_confidence_level.Name = "numericUpDown_confidence_level";
+            this.numericUpDown_confidence_level.Size = new System.Drawing.Size(83, 23);
+            this.numericUpDown_confidence_level.TabIndex = 2;
+            this.numericUpDown_confidence_level.Value = new decimal(new int[] {
             95,
             0,
             0,
@@ -133,31 +133,31 @@
             this.label3.TabIndex = 5;
             this.label3.Text = "Доверительный интервал α";
             // 
-            // chart1
+            // chart_depending_frequencies
             // 
-            this.chart1.BorderlineWidth = 0;
+            this.chart_depending_frequencies.BorderlineWidth = 0;
             chartArea3.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea3);
-            this.chart1.Location = new System.Drawing.Point(316, 26);
-            this.chart1.Name = "chart1";
-            this.chart1.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Bright;
-            this.chart1.Size = new System.Drawing.Size(446, 404);
-            this.chart1.TabIndex = 6;
-            this.chart1.Text = "chart1";
+            this.chart_depending_frequencies.ChartAreas.Add(chartArea3);
+            this.chart_depending_frequencies.Location = new System.Drawing.Point(316, 26);
+            this.chart_depending_frequencies.Name = "chart_depending_frequencies";
+            this.chart_depending_frequencies.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Bright;
+            this.chart_depending_frequencies.Size = new System.Drawing.Size(446, 404);
+            this.chart_depending_frequencies.TabIndex = 6;
+            this.chart_depending_frequencies.Text = "chart1";
             title2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
             title2.Name = "Title1";
-            this.chart1.Titles.Add(title2);
+            this.chart_depending_frequencies.Titles.Add(title2);
             // 
-            // button_Calculation
+            // button_calculation
             // 
-            this.button_Calculation.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button_Calculation.Location = new System.Drawing.Point(23, 208);
-            this.button_Calculation.Name = "button_Calculation";
-            this.button_Calculation.Size = new System.Drawing.Size(75, 30);
-            this.button_Calculation.TabIndex = 7;
-            this.button_Calculation.Text = "Расчет";
-            this.button_Calculation.UseVisualStyleBackColor = true;
-            this.button_Calculation.Click += new System.EventHandler(this.button1_Click);
+            this.button_calculation.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.button_calculation.Location = new System.Drawing.Point(23, 208);
+            this.button_calculation.Name = "button_calculation";
+            this.button_calculation.Size = new System.Drawing.Size(75, 30);
+            this.button_calculation.TabIndex = 7;
+            this.button_calculation.Text = "Расчет";
+            this.button_calculation.UseVisualStyleBackColor = true;
+            this.button_calculation.Click += new System.EventHandler(this.button_calculation_Click);
             // 
             // label4
             // 
@@ -178,15 +178,15 @@
             this.label5.Size = new System.Drawing.Size(0, 17);
             this.label5.TabIndex = 9;
             // 
-            // chart2
+            // chart_error
             // 
             chartArea4.Name = "ChartArea1";
-            this.chart2.ChartAreas.Add(chartArea4);
-            this.chart2.Location = new System.Drawing.Point(784, 26);
-            this.chart2.Name = "chart2";
-            this.chart2.Size = new System.Drawing.Size(431, 404);
-            this.chart2.TabIndex = 10;
-            this.chart2.Text = "chart2";
+            this.chart_error.ChartAreas.Add(chartArea4);
+            this.chart_error.Location = new System.Drawing.Point(784, 26);
+            this.chart_error.Name = "chart_error";
+            this.chart_error.Size = new System.Drawing.Size(431, 404);
+            this.chart_error.TabIndex = 10;
+            this.chart_error.Text = "chart2";
             // 
             // Form1
             // 
@@ -194,25 +194,25 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(1227, 442);
-            this.Controls.Add(this.chart2);
+            this.Controls.Add(this.chart_error);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.button_Calculation);
-            this.Controls.Add(this.chart1);
+            this.Controls.Add(this.button_calculation);
+            this.Controls.Add(this.chart_depending_frequencies);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.numericUpDown3);
-            this.Controls.Add(this.numericUpDown2);
-            this.Controls.Add(this.numericUpDown1);
+            this.Controls.Add(this.numericUpDown_confidence_level);
+            this.Controls.Add(this.numericUpDown_num_experiments);
+            this.Controls.Add(this.numericUpDown_num_throws);
             this.MaximizeBox = false;
             this.Name = "Form1";
             this.Text = "Лабораторная 1";
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chart2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_num_throws)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_num_experiments)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_confidence_level)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chart_depending_frequencies)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chart_error)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -220,17 +220,17 @@
 
         #endregion
 
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
-        private System.Windows.Forms.NumericUpDown numericUpDown2;
-        private System.Windows.Forms.NumericUpDown numericUpDown3;
+        private System.Windows.Forms.NumericUpDown numericUpDown_num_throws;
+        private System.Windows.Forms.NumericUpDown numericUpDown_num_experiments;
+        private System.Windows.Forms.NumericUpDown numericUpDown_confidence_level;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
-        private System.Windows.Forms.Button button_Calculation;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chart_depending_frequencies;
+        private System.Windows.Forms.Button button_calculation;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.DataVisualization.Charting.Chart chart2;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chart_error;
     }
 }
 
